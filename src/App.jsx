@@ -1,9 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "./layouts/RootLayout.jsx";
-import Home from "./pages/Home.jsx";
-import Portfolio from "./pages/Portfolio.jsx";
-import Contact from "./pages/Contact.jsx";
-import NotFound from "./pages/NotFound.jsx";
+
+// Layout
+import RootLayout from "./layouts/RootLayout";
+
+// Pagini
+import Home from "./pages/Home";
+import Portfolio from "./pages/Portfolio";
+import ProjectDetails from "./pages/ProjectDetails";
+import Team from "./pages/Team";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +20,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "portfolio", element: <Portfolio /> },
+      { path: "portfolio/:id", element: <ProjectDetails /> },
+      { path: "team", element: <Team /> },
+      { path: "blog", element: <Blog /> },
       { path: "contact", element: <Contact /> },
       { path: "*", element: <NotFound /> },
     ],
