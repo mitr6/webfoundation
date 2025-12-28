@@ -1,171 +1,78 @@
-import { useEffect, useRef, useState } from "react";
-import { Outlet, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function RootLayout() {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [theme, setTheme] = useState("dark");
-  const [navSolid, setNavSolid] = useState(false);
-  const [fade, setFade] = useState(false);
+  const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "dark");
+  const location = useLocation();
 
+  // Logica pentru aplicarea temei (Light/Dark)
   useEffect(() => {
-    const hour = new Date().getHours();
-    const initial = hour >= 8 && hour < 20 ? "light" : "dark";
-    const saved = localStorage.getItem("theme");
-    const t = saved || initial;
-    setTheme(t);
-    document.documentElement.setAttribute("data-theme", t);
-  }, []);
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
 
-  const toggleTheme = () => {
-    setFade(true);
-    setTimeout(() => {
-      const next = theme === "dark" ? "light" : "dark";
-      setTheme(next);
-      document.documentElement.setAttribute("data-theme", next);
-      localStorage.setItem("theme", next);
-      setFade(false);
-    }, 200);
-  };
-
-  const { scrollY } = useScroll();
-  const solidRange = useTransform(scrollY, [0, 120], [0, 1]);
+  // Resetăm scroll-ul la 0 (sus) de fiecare dată când schimbăm pagina
   useEffect(() => {
-    const unsub = solidRange.on("change", (v) => setNavSolid(v > 0.1));
-    return () => unsub();
-  }, [solidRange]);
-
-  const navRef = useRef(null);
-  const [underline, setUnderline] = useState({ left: 0, width: 0 });
-  useEffect(() => {
-    const id =
-      pathname === "/" ? "home" : pathname.replace("/", ""); 
-    const el = navRef.current?.querySelector(`a[data-id='${id}']`);
-    if (!el) return;
-    const { left, width } = el.getBoundingClientRect();
-    const parentLeft = navRef.current.getBoundingClientRect().left;
-    setUnderline({ left: left - parentLeft, width });
-  }, [pathname, theme, navSolid]);
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
-    <div className="min-h-dvh font-sans relative">
-      {fade && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.8 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[200] pointer-events-none"
-          style={{
-            background:
-              theme === "dark"
-                ? "rgba(255,255,255,0.7)"
-                : "rgba(0,0,0,0.7)",
-            backdropFilter: "blur(6px)",
-          }}
-        />
-      )}
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] transition-colors duration-500 font-sans antialiased">
+      
+      {/* NAVIGAȚIE EDITORIALĂ */}
+      <nav className="fixed top-0 w-full z-[100] h-20 flex items-center px-6 md:px-12 bg-[var(--bg)] bg-opacity-80 backdrop-blur-md border-b border-black/5 dark:border-white/5">
+        <div className="w-full max-w-[1800px] mx-auto flex justify-between items-center">
+          
+          {/* LOGO */}
+          <Link to="/" className="text-sm font-bold tracking-tighter uppercase group">
+            Foundation <span className="opacity-30 group-hover:opacity-100 transition-opacity italic">Studio</span>
+          </Link>
 
-      <motion.nav
-        animate={{
-          backgroundColor: navSolid
-            ? "color-mix(in oklab, var(--bg) 80%, transparent)"
-            : "transparent",
-        }}
-        transition={{ duration: 0.4 }}
-        className="fixed top-0 left-0 w-full z-50"
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-5">
-          <div
-            className="text-lg font-semibold tracking-tight select-none cursor-pointer"
-            style={{ color: "var(--fg)" }}
-            onClick={() => navigate("/")}
-          >
-            Lorem<span style={{ opacity: 0.6 }}>Ipsum</span>
-          </div>
-
-          {/* NAV LINKS */}
-          <div className="hidden md:block relative">
-            <div
-              ref={navRef}
-              className="flex gap-8 text-xs uppercase tracking-[0.14em]"
-              style={{
-                color: "color-mix(in oklab, var(--fg) 70%, transparent)",
-              }}
-            >
-              <NavLink
-                data-id="home"
-                to="/"
-                end
-                className={({ isActive }) =>
-                  `pb-2 ${isActive ? "text-[var(--fg)]" : "hover:opacity-70"}`
-                }
-              >
-                Home
-              </NavLink>
-              <NavLink
-                data-id="portofoliu"
-                to="/portofoliu"
-                className={({ isActive }) =>
-                  `pb-2 ${isActive ? "text-[var(--fg)]" : "hover:opacity-70"}`
-                }
-              >
-                Portfolio
-              </NavLink>
-              <NavLink
-                data-id="contact"
-                to="/contact"
-                className={({ isActive }) =>
-                  `pb-2 ${isActive ? "text-[var(--fg)]" : "hover:opacity-70"}`
-                }
-              >
-                Contact
-              </NavLink>
+          {/* MENU LINKS */}
+          <div className="flex items-center gap-8 md:gap-12">
+            <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.3em] font-medium">
+              <Link to="/portfolio" className="hover:opacity-40 transition-all duration-300">Portofoliu</Link>
+              <Link to="/team" className="hover:opacity-40 transition-all duration-300">Echipă</Link>
+              <Link to="/blog" className="hover:opacity-40 transition-all duration-300">Jurnal</Link>
+              <Link to="/contact" className="hover:opacity-40 transition-all duration-300">Contact</Link>
             </div>
-            <motion.div
-              animate={{ left: underline.left, width: underline.width }}
-              transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="absolute -bottom-0.5 h-[2px] rounded-full"
-              style={{ background: "var(--accent)" }}
-            />
-          </div>
 
-          {/* ACTION BUTTONS */}
-          <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="px-3 py-1 rounded-full text-xs border hover:opacity-80 transition"
-              style={{
-                color: "var(--fg)",
-                borderColor:
-                  "color-mix(in oklab, var(--fg) 25%, transparent)",
-              }}
+            {/* DARK MODE SWITCHER */}
+            <button 
+              onClick={() => setIsDark(!isDark)}
+              className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] px-5 py-2 border border-current hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-all duration-500 rounded-full"
             >
-              {theme === "dark" ? "Light" : "Dark"}
-            </button>
-
-            <button
-              onClick={() => navigate("/contact")}
-              className="px-4 py-2 rounded-full text-xs font-medium hover:opacity-90 transition"
-              style={{
-                color: "var(--fg)",
-                backdropFilter: "blur(12px)",
-                background:
-                  "color-mix(in oklab, var(--bg) 40%, transparent)",
-                border:
-                  "1px solid color-mix(in oklab, var(--fg) 12%, transparent)",
-              }}
-            >
-              Hire us
+              {isDark ? "Light Mode" : "Dark Mode"}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      <div className="pt-20 fade-transition">
+      {/* RENDER PAGINI (Home, Portfolio, etc.) */}
+      <main className="pt-20">
         <Outlet />
-      </div>
+      </main>
+
+      {/* FOOTER MINIMALIST */}
+      <footer className="py-24 px-6 md:px-12 border-t border-black/5 dark:border-white/5 bg-[var(--bg)]">
+        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="text-[10px] uppercase tracking-[0.5em] opacity-30">
+            Foundation Studio © {new Date().getFullYear()}
+          </div>
+          
+          <div className="flex gap-8 text-[9px] uppercase tracking-[0.2em] opacity-50">
+            <a href="#" className="hover:opacity-100 transition">Instagram</a>
+            <a href="#" className="hover:opacity-100 transition">LinkedIn</a>
+            <a href="#" className="hover:opacity-100 transition">Behance</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
