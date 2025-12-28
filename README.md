@@ -1,50 +1,54 @@
-# 🏗️ Foundation Web - Construction Web Template Showcase
+# FOUNDATION.
 
-> A fully responsive and performance-optimized presentation website, engineered to showcase the portfolio and services of a modern construction firm.
+![Project Banner](https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop)
 
-[https://webfoundation.vercel.app/] | [https://github.com/mitro1337/foundation-web/]
+> *"Form follows function, but both obey aesthetics."*
 
-[![React Badge](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)](https://react.dev/)
-[![Vite Badge](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
----
+## 🏛 About the Project
 
-## 🎯 Project Overview & Business Value
+**FOUNDATION** is an experimental digital portfolio built at the intersection of software engineering and brutalist design. It is not just a showcase site, but an immersive experience emphasizing typography, micro-interactions, and fluidity.
 
-Foundation Web Studio serves as a high-quality template for any business requiring a robust online presence. This project demonstrates expertise in combining modern, high-speed frontend development with essential business requirements:
- 
-* **Primary Goal:** Deliver an intuitive, accessible, and ultra-fast user experience to potential clients.
-* **Business Relevance:** The component architecture is designed for **easy content updates** and **future integration** with CRM or client management systems (demonstrating business logic understanding).
-* **Key Focus:** Implementing advanced responsive design principles and optimizing asset loading for high Lighthouse scores.
+The site's architecture is conceived as a physical space: robust, minimalist, yet full of fine details that reveal themselves as you explore.
 
----
+## ✨ Experience & Features
 
-## 🛠️ Technical Stack & Implementation Rationale
+This project integrates modern frontend development techniques to achieve maximum performance scores and a premium "feel":
 
-The application is built on a high-performance stack, ensuring speed, stability, and maintainability.
+* **🧈 Lenis Smooth Scroll** — Inertial, "buttery smooth" scrolling for cinematic navigation.
+* **🌪 Page Transitions** — SPA (Single Page Application) navigation without abrupt reloads.
+* **🧲 Magnetic Buttons** — UI elements that physically react to cursor position.
+* **🎭 Parallax Effects** — Visual depth created through differential scroll speeds.
+* **🌑 Thematic System** — Native Dark/Light mode with local persistence.
+* **⚡ Vite Powered** — Instant builds and HMR (Hot Module Replacement).
+* **📱 Responsive Editorial Grid** — Asymmetrical layout that adapts perfectly from 4K to Mobile.
 
-| Category | Technology | Rationale (Why?) |
-| :--- | :--- | :--- |
-| **UI Framework** | React | Core library for building reusable components and maintaining state management. |
-| **Build Tool** | Vite | Ultra-fast development server and highly optimized production bundling. |
-| **Styling** | Tailwind CSS | Utility-first approach for rapid, consistent styling and clean component code. |
-| **Routing** | React Router DOM | Seamless client-side navigation between different sections (e.g., Services, Portfolio, Contact). |
-| **Deployment** | Vercel | Zero-configuration deployment and superior global content delivery (CDN). |
+## 🛠 Tech Stack
 
----
+* **Core:** React 18
+* **Styling:** Tailwind CSS (Utility-first)
+* **Animation:** Framer Motion (Complex orchestration)
+* **Routing:** React Router DOM v6
+* **Scroll:** @studio-freight/lenis
+* **Backend (Optional):** Supabase (for dynamic data)
 
-## 📈 Key Features & Engineering Highlights
+## 🚀 Installation & Running
 
-This project includes critical features expected from a professional business website, executed with attention to detail and performance:
+Clone the repository and bring the code to reality on your local machine.
 
-* **Responsive & Adaptive Design:** Fully adapts to all screen sizes (Mobile-First approach), ensuring accessibility and consistent branding.
-* **Optimized Asset Loading:** Implemented techniques (e.g., image lazy loading, proper sizing) to ensure the portfolio section loads quickly, even with high-resolution images.
-* **Validated Contact Form:** Front-end form validation to ensure data quality and provide immediate user feedback for lead generation.
-* **Dynamic Portfolio Showcase:** Component architecture designed to allow quick addition/removal of new projects without changing core code.
-* **Clean Component Architecture:** Clear separation of UI logic, utility components
+```bash
+# 1. Clone the repo
+git clone [https://github.com/YOUR-USERNAME/FOUNDATION.git](https://github.com/YOUR-USERNAME/FOUNDATION.git)
 
-* For testing and another using purposes you can test it with using **npm install**, after this you are using **npm run dev** and you go to **https::/localhost:5173/**
+# 2. Enter directory
+cd FOUNDATION
 
-* The application will start automatically, usually on http://localhost:5173/.
+# 3. Install dependencies (NPM)
+npm install
+
+# 4. Start development server
+npm run dev
