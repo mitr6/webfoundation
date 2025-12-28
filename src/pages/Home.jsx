@@ -1,162 +1,90 @@
 import { motion } from "framer-motion";
-import useSmoothScroll from "../hooks/useSmoothScroll";
+import { Link } from "react-router-dom";
 
 export default function Home() {
-  useSmoothScroll({ ease: 0.085 });
-
   return (
-    <div className="bg-[var(--bg)] text-[var(--fg)] overflow-hidden">
-      <section className="relative h-[100svh] flex flex-col items-center justify-center text-center select-none">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-          src="https://cdn.coverr.co/videos/coverr-construction-site-hero-3451/1080p.mp4"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, color-mix(in oklab, var(--bg) 70%, transparent), color-mix(in oklab, var(--bg) 20%, transparent), var(--bg))",
-          }}
-        />
-        <motion.h1
-          initial={{ opacity: 0, y: 70 }}
+    <div className="bg-[var(--bg)] text-[var(--fg)] transition-colors duration-500">
+      
+      {/* SECTION 1: HERO - Tipografie Gigantă */}
+      <section className="relative h-screen flex flex-col justify-end px-6 md:px-12 pb-20 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, ease: "easeOut" }}
-          className="relative z-10 text-6xl md:text-8xl font-semibold tracking-tight leading-[1.06]"
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10"
         >
-          Lorem <span style={{ opacity: 0.7 }}>ipsum</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.9 }}
-          className="relative z-10 mt-6 text-lg md:text-xl max-w-xl mx-auto"
-          style={{ color: "color-mix(in oklab, var(--fg) 75%, transparent)" }}
-        >
-          dolor sit amet, consectetur adipiscing elit,
-        </motion.p>
+          <h1 className="text-[15vw] md:text-[12vw] font-light leading-[0.8] tracking-[-0.06em] uppercase">
+            Pure <br />
+            <span className="italic font-serif lowercase opacity-30 ml-[10vw]">Structure</span>
+          </h1>
+          <div className="mt-12 flex flex-col md:flex-row justify-between items-end gap-8">
+            <p className="max-w-xs text-xs uppercase tracking-[0.3em] opacity-50">
+              Estetică minimalistă integrată în proiecte de inginerie avansată.
+            </p>
+            <Link to="/portfolio" className="group flex items-center gap-4">
+              <span className="text-[10px] uppercase tracking-[0.5em]">Vezi Portofoliu</span>
+              <div className="w-12 h-px bg-[var(--fg)] group-hover:w-20 transition-all duration-500"></div>
+            </Link>
+          </div>
+        </motion.div>
       </section>
 
-      {/* ABOUT */}
-      <section
-        id="about"
-        className="min-h-[100svh] flex flex-col items-center justify-center px-6 text-center"
-      >
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="text-5xl md:text-6xl font-light mb-8"
-        >
-          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 1 }}
-          className="text-lg md:text-xl max-w-3xl leading-relaxed"
-          style={{ color: "var(--muted)" }}
-        >
-          Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </motion.p>
-      </section>
-
-      {/* PARALLAX */}
-      <section
-        className="relative h-[120svh] bg-fixed bg-center bg-cover"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=2000&q=80')",
-        }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ background: "color-mix(in oklab, var(--bg) 55%, transparent)" }}
+      {/* SECTION 2: IMAGINE FULL-BLEED (Efect Parallax Subtil) */}
+      <section className="h-[120vh] w-full overflow-hidden relative">
+        <motion.img 
+          initial={{ scale: 1.2 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070" 
+          className="w-full h-full object-cover grayscale brightness-50 dark:brightness-75"
+          alt="Arhitectură"
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.h3
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.1 }}
-            className="text-5xl md:text-6xl font-semibold tracking-tight text-center max-w-2xl"
-          >
-            Form follows <span style={{ opacity: 0.7 }}>function</span>.
-          </motion.h3>
+        <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
+          <h2 className="text-white text-3xl md:text-5xl font-serif italic max-w-2xl leading-tight">
+            "Forma urmează funcția, dar ambele se supun esteticii."
+          </h2>
         </div>
       </section>
 
-      {/* PROJECTS */}
-      <section
-        id="projects"
-        className="py-36 px-6"
-        style={{ background: "var(--card)" }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-4xl font-light text-center mb-16">
-            Selected Works
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.06 }}
-                className="group cursor-pointer"
-              >
-                <div className="overflow-hidden rounded-3xl shadow-2xl">
-                  <img
-                    src={`https://picsum.photos/900/600?random=${i}`}
-                    alt=""
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <h4 className="mt-5 text-lg font-medium group-hover:opacity-70 transition">
-                  Project #{i}
-                </h4>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  Luxury & precision.
-                </p>
-              </motion.div>
-            ))}
+      {/* SECTION 3: EDITORIAL GRID (Text & Image) */}
+      <section className="py-40 px-6 md:px-12 max-w-[1800px] mx-auto">
+        <div className="grid md:grid-cols-2 gap-24 items-center">
+          <div className="space-y-12">
+            <span className="text-[10px] uppercase tracking-[0.5em] opacity-40">Filozofia Noastră</span>
+            <h3 className="text-5xl md:text-7xl uppercase tracking-tighter leading-none">
+              Materiale brute. <br /> Detalii fine.
+            </h3>
+            <p className="text-lg opacity-60 max-w-md leading-relaxed">
+              Fiecare proiect Foundation este un studiu despre echilibru. Folosim betonul, oțelul și lumina pentru a crea spații care respiră.
+            </p>
+            <Link to="/contact" className="inline-block border border-current px-10 py-4 text-[10px] uppercase tracking-[0.4em] hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-all">
+              Contactează un Arhitect
+            </Link>
+          </div>
+          <div className="aspect-[3/4] overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=1965" 
+              className="w-full h-full object-cover grayscale"
+              alt="Design"
+            />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-40 text-center px-6">
-        <h2 className="text-5xl font-light mb-8">Let’s build your vision.</h2>
-        <p
-          className="text-lg max-w-2xl mx-auto mb-10"
-          style={{ color: "var(--muted)" }}
+      {/* SECTION 4: BIG CTA */}
+      <section className="py-60 text-center border-t border-black/5 dark:border-white/5">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="space-y-12"
         >
-          Duis aute irure dolor in reprehenderit in voluptate 
-          velit esse cillum dolore eu fugiat nulla pariatur.
-        </p>
-        <a
-          href="/contact"
-          className="inline-block px-10 py-4 rounded-full text-lg font-medium hover:opacity-90 transition"
-          style={{ background: "var(--accent)", color: "var(--bg)" }}
-        >
-          Contact
-        </a>
+          <h4 className="text-[15vw] md:text-[10vw] uppercase leading-none tracking-tighter opacity-10">Contact</h4>
+          <Link to="/contact" className="text-4xl md:text-7xl uppercase tracking-tighter hover:italic transition-all inline-block">
+            Să începem proiectul tău →
+          </Link>
+        </motion.div>
       </section>
-
-      <footer
-        className="text-center py-10 text-sm opacity-60"
-        style={{ color: "var(--muted)" }}
-      >
-        © {new Date().getFullYear()} mitro1337, all rights reserved.
-      </footer>
     </div>
   );
 }
