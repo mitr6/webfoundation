@@ -15,6 +15,15 @@ export default function Portfolio() {
         .select("*")
         .order("created_at", { ascending: false });
       if (!error) setProjects(data);
+      // Fallback data if DB is empty for demo purposes
+      if (!data || data.length === 0) {
+        setProjects([
+           { id: 1, title: "Apex Tower", category: "Commercial", year: "2024", cover_url: "https://images.unsplash.com/photo-1486325212027-8081e485255e" },
+           { id: 2, title: "Brutalist Home", category: "Residential", year: "2023", cover_url: "https://images.unsplash.com/photo-1493329025335-18542a61595f" },
+           { id: 3, title: "Neon Factory", category: "Industrial", year: "2023", cover_url: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c" },
+           { id: 4, title: "Void Museum", category: "Infrastructure", year: "2022", cover_url: "https://images.unsplash.com/photo-1516934024742-b461fba47600" }
+        ]);
+      }
       setLoading(false);
     }
     fetchProjects();
@@ -25,107 +34,93 @@ export default function Portfolio() {
     [filter, projects]
   );
 
-  if (loading) return (
-    <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
-      <motion.div 
-        animate={{ opacity: [0.2, 1, 0.2] }} 
-        transition={{ repeat: Infinity, duration: 1.5 }}
-        className="text-[10px] uppercase tracking-[0.5em] opacity-50"
-      >
-        Se încarcă arhiva...
-      </motion.div>
-    </div>
-  );
-
   return (
-    <main className="max-w-[1800px] mx-auto px-6 md:px-12 py-32 text-[var(--fg)] bg-[var(--bg)]">
-      {/* HEADER EDITORIAL */}
-      <header className="mb-32">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h1 className="text-[12vw] md:text-[9vw] font-light leading-[0.8] tracking-[-0.05em] uppercase mb-16">
-            Proiecte <br />
-            <span className="italic font-serif lowercase opacity-40 ml-[5vw]">relevante</span>
+    <main className="max-w-[1920px] mx-auto px-6 md:px-12 py-32 bg-[var(--bg)] min-h-screen">
+      
+      {/* HEADER */}
+      <header className="mb-32 flex flex-col md:flex-row justify-between items-end gap-12">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <h1 className="text-[12vw] md:text-[8vw] font-light leading-[0.8] tracking-[-0.05em] uppercase">
+            Selected <br />
+            <span className="italic font-serif lowercase opacity-40 ml-[5vw] text-[var(--accent)]">Works</span>
           </h1>
         </motion.div>
 
-        {/* FILTRE MINIMALISTE */}
-        <div className="flex flex-wrap gap-x-12 gap-y-4 border-b border-[var(--fg)] border-opacity-10 pb-8">
+        {/* FILTERS */}
+        <div className="flex flex-wrap gap-4 md:gap-8 pb-4">
           {["All", "Industrial", "Residential", "Commercial", "Infrastructure"].map((cat) => (
             <button 
               key={cat} 
               onClick={() => setFilter(cat)}
-              className={`text-[10px] uppercase tracking-[0.3em] transition-all relative ${
-                filter === cat ? "opacity-100" : "opacity-30 hover:opacity-100"
+              className={`text-xs uppercase tracking-[0.2em] px-4 py-2 rounded-full border transition-all duration-300 ${
+                filter === cat 
+                  ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]" 
+                  : "border-transparent opacity-50 hover:opacity-100 hover:border-[var(--fg)]"
               }`}
             >
               {cat}
-              {filter === cat && (
-                <motion.div layoutId="underline" className="absolute -bottom-[33px] left-0 right-0 h-[2px] bg-[var(--fg)]" />
-              )}
             </button>
           ))}
         </div>
       </header>
 
-      {/* GRID ASIMETRIC / EDITORIAL */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-y-32 md:gap-y-64 gap-x-12">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((p, i) => (
-            <motion.div 
-              key={p.id}
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.8, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className={`md:col-span-6 ${i % 2 !== 0 ? "md:mt-32" : ""}`}
-            >
-              <Link to={`/portfolio/${p.id}`} className="group block">
-                <div className="relative overflow-hidden bg-[var(--card)] aspect-[16/10] mb-8">
-                  <img 
-                    src={p.cover_url || "https://picsum.photos/1200/800"} 
-                    alt={p.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[1.5s] cubic-bezier(0.16, 1, 0.3, 1)"
-                  />
-                  {/* Overlay subtil la hover */}
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-                </div>
-                
-                <div className="flex justify-between items-start">
-                  <div className="max-w-[70%]">
-                    <span className="text-[10px] uppercase tracking-widest opacity-40 block mb-2">{p.category}</span>
-                    <h3 className="text-3xl md:text-4xl uppercase font-light leading-tight tracking-tighter group-hover:italic transition-all">
-                      {p.title}
-                    </h3>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-mono opacity-40">{p.year}</span>
-                    <div className="mt-4 overflow-hidden">
-                      <motion.div 
-                        className="text-[10px] uppercase tracking-[0.2em] transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"
-                      >
-                        Vezi Proiectul →
-                      </motion.div>
+      {/* LOADING STATE */}
+      {loading ? (
+        <div className="flex justify-center py-40">
+           <div className="w-12 h-12 border-2 border-[var(--fg)] border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        /* GRID */
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-24">
+          <AnimatePresence>
+            {filtered.map((p, i) => (
+              <motion.div 
+                layout
+                key={p.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`lg:col-span-6 group cursor-pointer ${i % 2 !== 0 ? "lg:translate-y-24" : ""}`}
+              >
+                <Link to={`/portfolio/${p.id}`} className="block">
+                  <div className="relative overflow-hidden aspect-[16/12] mb-6 rounded-lg bg-[var(--card)]">
+                    <motion.img 
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                      src={p.cover_url} 
+                      alt={p.title}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute top-4 right-4 bg-[var(--bg)]/80 backdrop-blur text-[10px] px-3 py-1 rounded uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                      {p.year}
                     </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+                  
+                  <div className="border-t border-[var(--fg)]/20 pt-4 flex justify-between items-center">
+                    <div>
+                      <h3 className="text-3xl uppercase font-medium tracking-tight group-hover:text-[var(--accent)] transition-colors">
+                        {p.title}
+                      </h3>
+                      <p className="text-[10px] uppercase tracking-widest opacity-50 mt-1">{p.category}</p>
+                    </div>
+                    <div className="w-10 h-10 border border-[var(--fg)]/20 rounded-full flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:border-transparent group-hover:text-white transition-all duration-300">
+                      ↗
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      )}
 
-      {/* FOOTER PAGINA */}
-      <section className="mt-64 py-32 border-t border-[var(--fg)] border-opacity-10 text-center">
-        <h2 className="text-4xl uppercase tracking-tighter mb-12 opacity-30">Următorul tău spațiu începe aici.</h2>
-        <Link to="/contact" className="text-xs uppercase tracking-[0.5em] border border-[var(--fg)] px-12 py-5 hover:bg-[var(--fg)] hover:text-[var(--bg)] transition-all duration-500">
-          Contactează-ne
+      {/* FOOTER */}
+      <div className="mt-64 flex justify-center">
+        <Link to="/contact" className="text-sm uppercase tracking-[0.4em] border-b border-transparent hover:border-[var(--fg)] pb-1 transition-all">
+           Archive View (2018-2024)
         </Link>
-      </section>
+      </div>
     </main>
   );
 }

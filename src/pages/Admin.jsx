@@ -26,11 +26,11 @@ export default function Admin() {
   }, []);
 
   async function signInWithEmail() {
-    const email = prompt("Email pentru magic link:");
+    const email = prompt("Email for magic link:");
     if (!email) return;
     const { error } = await supabase.auth.signInWithOtp({ email });
     if (error) alert(error.message);
-    else alert("Verifică emailul pentru link-ul de login.");
+    else alert("Check your email for the login link.");
   }
 
   async function signOut() {
@@ -64,7 +64,7 @@ export default function Admin() {
   }
 
   async function del(id) {
-    if (!confirm("Ștergi proiectul?")) return;
+    if (!confirm("Delete project?")) return;
     const { error } = await supabase.from("projects").delete().eq("id", id);
     if (error) return alert(error.message);
     fetchProjects();
@@ -89,13 +89,13 @@ export default function Admin() {
     return (
       <div className="min-h-[60svh] flex flex-col items-center justify-center gap-4 text-[var(--fg)]">
         <h1 className="text-3xl font-light">Admin</h1>
-        <p className="opacity-70">Autentificare necesară.</p>
+        <p className="opacity-70">Authentication required.</p>
         <button
           onClick={signInWithEmail}
           className="px-5 py-2 rounded-full border hover:opacity-80"
           style={{ borderColor: "color-mix(in oklab, var(--fg) 25%, transparent)" }}
         >
-          Trimite magic link
+          Send magic link
         </button>
       </div>
     );
@@ -156,7 +156,7 @@ export default function Admin() {
         </div>
 
         <div>
-          <label className="block text-sm mb-2 opacity-80">Locație</label>
+          <label className="block text-sm mb-2 opacity-80">Location</label>
           <input
             className="w-full px-4 py-3 rounded-xl bg-transparent border outline-none"
             style={{ borderColor: "color-mix(in oklab, var(--fg) 25%, transparent)" }}
@@ -166,7 +166,7 @@ export default function Admin() {
         </div>
 
         <div>
-          <label className="block text-sm mb-2 opacity-80">Anul</label>
+          <label className="block text-sm mb-2 opacity-80">Year</label>
           <input
             type="number"
             className="w-full px-4 py-3 rounded-xl bg-transparent border outline-none"
@@ -177,7 +177,7 @@ export default function Admin() {
         </div>
 
         <div>
-          <label className="block text-sm mb-2 opacity-80">Buget (EUR)</label>
+          <label className="block text-sm mb-2 opacity-80">Budget (EUR)</label>
           <input
             type="number"
             step="0.01"
@@ -230,7 +230,7 @@ export default function Admin() {
             className="px-6 py-3 rounded-full font-medium hover:opacity-90 transition"
             style={{ background: "var(--accent)", color: "var(--bg)" }}
           >
-            Salvează proiect
+            Save Project
           </button>
         </div>
       </form>
