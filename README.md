@@ -42,10 +42,10 @@ Clone the repository and bring the code to reality on your local machine.
 
 ```bash
 # 1. Clone the repo
-git clone [https://github.com/YOUR-USERNAME/FOUNDATION.git](https://github.com/YOUR-USERNAME/FOUNDATION.git)
+git clone [https://github.com/mitro68/foundation.git](https://github.com/mitro68/foundation.git)
 
 # 2. Enter directory
-cd FOUNDATION
+cd foundation
 
 # 3. Install dependencies (NPM)
 npm install
